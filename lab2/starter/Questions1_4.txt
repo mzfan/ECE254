@@ -1,0 +1,21 @@
+1. 
+Non-idle task IDs will be on index [n-1] of the active_TCB array.
+
+2.
+- p_lnk is the link pointer for ready/semaphore wait list.
+
+- ts_stack is the stack pointer to the current task.
+
+- Yes, casting the pointer for XCB to TCB should keep the p_lnk field.
+
+3.
+mp_tcb and mp_stk are the memory pools for the TCB and system stack allocations.
+
+4.
+- The registers saved to stack are R0-R12,LR,xPSR,PC
+- bit15 to bit2 of os_stackinfo contains the size of the stack.
+- Take the memory address of the stack pointer then add the size of the stack (x 4)
+- PSP contains the pointer to the stack containing not running processes
+- MSP contains the stack pointer to running processes (tsk_stack in OS_TCB contains the address to R13)
+
+5.

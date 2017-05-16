@@ -37,12 +37,17 @@ int rt_tsk_count_get (void) {
 /*--------------------------- rt_tsk_get ------------------------------------*/
 /* added in ECE254 lab keil_proc */
 OS_RESULT rt_tsk_get (OS_TID task_id, RL_TASK_INFO *p_task_info) {
-	/* Add your own code here. Change the following lines accordingly */
+	
+  P_TCB p_task = os_active_TCB[task_id-1];
+  int usage;
+  int stack_size = os_stackinfo * 8;
+  usage = (int)((*p_task->stack - p_task->tsk_stack)/stack_size)*100;
+  
 	p_task_info->task_id     = task_id;
-	p_task_info->state       = INACTIVE;
-	p_task_info->prio        = 99;
-	p_task_info->stack_usage = 15;
-	p_task_info->ptask       = NULL;
+	p_task_info->state       = p_task->state;
+	p_task_info->prio        = p_task->prio;
+	p_task_info->stack_usage = usage;
+	p_task_info->ptask       = p_task->ptask;
 	return OS_R_OK;
 }
 
